@@ -1,0 +1,57 @@
+# Stock Portfolio Tracker
+
+# Hardcoded stock prices
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 140,
+    "MSFT": 330,
+    "AMZN": 145
+}
+
+portfolio = {}
+total_investment = 0
+
+# Number of stocks user wants to enter
+n = int(input("How many stocks do you want to add? "))
+
+# Taking stock details from user
+for i in range(n):
+    stock = input("Enter stock symbol (AAPL, TSLA, etc.): ").upper()
+    quantity = int(input("Enter quantity: "))
+
+    portfolio[stock] = quantity
+
+# Calculate total investment
+print("\n----- Portfolio Summary -----")
+
+for stock, quantity in portfolio.items():
+    if stock in stock_prices:
+        value = stock_prices[stock] * quantity
+        total_investment += value
+
+        print(f"{stock}: {quantity} shares × ${stock_prices[stock]} = ${value}")
+
+    else:
+        print(f"{stock}: Price not available")
+
+print("\nTotal Investment Value = $", total_investment)
+
+# Optional: Save to a text file
+save = input("\nDo you want to save results to a file? (yes/no): ").lower()
+
+if save == "yes":
+    with open("portfolio.txt", "w") as file:
+        file.write("Portfolio Summary\n")
+        file.write("-----------------\n")
+
+        for stock, quantity in portfolio.items():
+            if stock in stock_prices:
+                value = stock_prices[stock] * quantity
+                file.write(
+                    f"{stock}: {quantity} shares × ${stock_prices[stock]} = ${value}\n"
+                )
+
+        file.write(f"\nTotal Investment Value = ${total_investment}")
+
+    print("Portfolio saved to portfolio.txt")
